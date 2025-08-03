@@ -1,0 +1,32 @@
+.admin-dashboard {
+  padding: 2rem;
+  background-color: #f9f9f9;
+}
+
+.admin-dashboard h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  background-color: #e0f7fa;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.clickable:hover {
+  transform: scale(1.02);
+  background-color: #f0f0f0;
+}

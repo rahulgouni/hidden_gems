@@ -12,16 +12,26 @@ function Navbar() {
     navigate('/login');
   };
 
+  const isAdmin = user?.id === 1;
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
         <Link to="/" className="brand">🌍 Hidden Gems</Link>
       </div>
+
       <ul className="navbar-right">
         {user ? (
           <>
-            <li><Link to="/dashboard">Dashboard</Link></li>
-            <li><Link to="/create">Create Post</Link></li>
+            {isAdmin ? (
+              <li><Link to="/admin/dashboard">Admin Panel</Link></li>
+            ) : (
+              <>
+                <li><Link to="/dashboard">Dashboard</Link></li>
+                <li><Link to="/create">Create Post</Link></li>
+                <li><Link to="/explore">Explore</Link></li>
+              </>
+            )}
             <li className="greeting">Hi, {user.name.split(' ')[0]}</li>
             <li><button className="logout-btn" onClick={handleLogout}>Logout</button></li>
           </>

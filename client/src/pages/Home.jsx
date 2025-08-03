@@ -11,7 +11,7 @@ const Home = () => {
   const [maxBudget, setMaxBudget] = useState('');
 
   useEffect(() => {
-  fetch('http://localhost:5000/api/posts')
+  fetch('http://localhost:5000/api/posts/all')
     .then((res) => res.json())
     .then((data) => {
       if (Array.isArray(data)) {

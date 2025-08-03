@@ -1,22 +1,20 @@
 import { useState, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // 🔁 Add Link for navigation
+import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import './Auth.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext); // get login function from context
+  const { login } = useContext(AuthContext);
 
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  // Handle input changes for email/password
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Handle login form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -32,14 +30,20 @@ const Login = () => {
       const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem('token', data.token); // store token
+        localStorage.setItem('token', data.token);
 
         if (typeof login === 'function') {
-          login(data.user); // set user globally
+          login(data.user);
         }
 
         setSuccess('Login successful!');
-        navigate('/dashboard'); // 🔁 redirect immediately
+
+        // 🔁 Redirect based on user id
+        if (data.user.id === 1) {
+          navigate('/admin/dashboard');
+        } else {
+          navigate('/dashboard');
+        }
       } else {
         setError(data.message || 'Invalid credentials');
       }
@@ -75,7 +79,6 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
 
-      {/* 🔗 Register link below */}
       <p className="auth-link">
         Don't have an account? <Link to="/register">Register here</Link>
       </p>
