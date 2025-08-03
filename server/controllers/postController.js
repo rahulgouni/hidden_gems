@@ -81,8 +81,27 @@ const updatePost = async (req, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  try {
+    const [result] = await db.query(
+      'DELETE FROM posts WHERE id = ? AND user_id = ?',
+      [req.params.id, req.user.id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Post not found or not authorized' });
+    }
+
+    res.json({ message: 'Post deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting post:', err);
+    res.status(500).json({ message: 'Failed to delete post', error: err });
+  }
+};
+
+
 module.exports = {
-  createPost, getAllPosts, getPostById, getUserPosts, updatePost
+  createPost, getAllPosts, getPostById, getUserPosts, updatePost, deletePost
 };
 
 
